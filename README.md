@@ -53,7 +53,7 @@ astro dev init
 2. Configure Astronomer Airflow by editing `.astro/config.yaml`:
 ```yaml
 project:
-    name: task-2
+    name: impressions-clicks
 mounts:
   - name: output
     path: /usr/local/airflow/output
