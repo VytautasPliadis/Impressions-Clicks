@@ -6,7 +6,7 @@ import logging
 
 @dag(
     start_date=datetime(2022, 5, 25),
-    schedule_interval="40 12 * * *",
+    schedule_interval="00 00 * * *",
     catchup=False,
     default_args={"owner": "vytautas", "retries": 3},
     tags=["task_2"],

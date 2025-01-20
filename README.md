@@ -48,6 +48,7 @@ docker compose run spark /opt/bitnami/spark/bin/spark-submit main.py --user-agen
 1. Create an Astro project
 ```bash
 astro dev init
+astro dev start
 ```
 
 2. Configure Astronomer Airflow by editing `.astro/config.yaml`:
@@ -82,7 +83,7 @@ airflow dags backfill task_2 -s 2022-05-26 -e 2022-05-28
 
 ## Pipeline Overview
 
-# TODO
+TODO
 
 ## Pipeline Steps
 
@@ -109,7 +110,7 @@ airflow dags backfill task_2 -s 2022-05-26 -e 2022-05-28
 - Removes processed Parquet files after successful processing
 
 ### 4. Data Loading (Airflow)
-- **Schedule**: Daily at 12:40 PM
+- **Schedule**: Daily at 00:00
 - **Process**:
   1. Reads daily CSV files
   2. Transforms datetime format
