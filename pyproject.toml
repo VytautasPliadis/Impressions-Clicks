@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "task3"
+version = "0.1.0"
+description = ""
+authors = ["VytautasPliadis <vytautas.pliadis@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pytest = "^8.3.4"
+pyspark = "^3.5.4"
+pandas = "^2.2.3"
+pyarrow = "^19.0.0"
+grpcio = "^1.69.0"
+protobuf = "^5.29.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,19 @@
+# Base image
+FROM bitnami/spark:latest
+
+USER root
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y python3-pip \
+    && pip3 install pandas pyarrow grpcio protobuf \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY . /app
+
+RUN chmod -R 755 /app
+
+USER 1001
+
+CMD ["/opt/bitnami/scripts/spark/run.sh"]

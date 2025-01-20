@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  spark:
+    build:
+      context: .
+      dockerfile: Dockerfile_spark
+    container_name: spark_app
+    user: root
+    volumes:
+      - ./app:/app
+      - ./raw_data:/app/raw_data
+      - ./output:/app/output
+    environment:
+      - SPARK_MODE=client
+    command: /opt/bitnami/spark/bin/spark-submit main.py --user-agent "some user agent"
+  
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
