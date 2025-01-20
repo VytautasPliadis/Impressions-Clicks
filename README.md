@@ -1,6 +1,6 @@
 # Impressions & Clicks Pipeline
 A data engineering solution for processing impression and click data.
-
+![impresclicks.png](img/impresclicks.png)
 ## Overview
 This project implements a data pipeline that processes impression and click data using Apache Spark and Apache Airflow. It provides automated data processing, aggregation, and storage capabilities with a containerized setup using Docker.
 
@@ -80,10 +80,6 @@ airflow dags backfill task_2 -s 2022-05-26 -e 2022-05-28
 ```
 
 # Data Pipeline Workflow
-
-## Pipeline Overview
-
-TODO
 
 ## Pipeline Steps
 
