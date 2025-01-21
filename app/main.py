@@ -9,7 +9,6 @@ from pyspark.sql.connect.dataframe import DataFrame
 from pyspark.sql.functions import regexp_extract, input_file_name, to_date, col
 import logging
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
@@ -69,13 +68,23 @@ def save_to_csv_per_day(df: DataFrame, output_path: str) -> None:
 
     for row in dates:
         day = row["date"]  # day is already in YYYY-MM-DD format
-        output_file = output_dir / f"{day}.csv"
-        
-        # Filter data for this day and save to CSV
+        temp_dir = output_dir / f"temp_{day}"
+        final_file = output_dir / f"{day}.csv"
+
+        # Filter data for this day and save to temporary directory
         df.filter(df.date == day) \
-          .write.mode("overwrite") \
-          .option("header", "true") \
-          .csv(str(output_file))
+            .write.mode("overwrite") \
+            .option("header", "true") \
+            .csv(str(temp_dir))
+
+        # Find the CSV file in the temporary directory (excluding metadata files)
+        csv_files = list(Path(temp_dir).glob("*.csv"))
+        if csv_files:
+            # Move the CSV file to the final location
+            shutil.move(str(csv_files[0]), str(final_file))
+
+        # Clean up temporary directory
+        shutil.rmtree(temp_dir)
 
 
 def delete_processed_files(file_list: list[str]) -> None:
