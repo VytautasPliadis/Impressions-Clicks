@@ -143,10 +143,9 @@ The pipeline generates hourly aggregations in the following format:
 # Connect to the container
 docker exec -it postgres_database bash
 
-# Connect to PostgreSQL using psql
+# Connect to PostgreSQL
 psql -U postgres -d db
 
-# List all tables
 # Query the table
 SELECT * FROM csv_data_task;
 ```
