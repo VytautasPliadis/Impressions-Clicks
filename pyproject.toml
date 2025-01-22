@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "task3"
+name = "impressions-clicks"
 version = "0.1.0"
 description = ""
 authors = ["VytautasPliadis <vytautas.pliadis@gmail.com>"]

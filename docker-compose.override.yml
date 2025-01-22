@@ -1,6 +1,17 @@
-version: '3.8'
-
 services:
+  db:
+    image: postgres:12.6
+    container_name: postgres_database
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   spark:
     build:
       context: .
@@ -14,18 +25,6 @@ services:
     environment:
       - SPARK_MODE=client
     command: /opt/bitnami/spark/bin/spark-submit main.py --user-agent "some user agent"
-  
-  postgres:
-    image: postgres:15
-    container_name: postgres_db
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=db
-    ports:
-      - "5433:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:

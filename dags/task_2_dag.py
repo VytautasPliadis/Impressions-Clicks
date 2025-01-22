@@ -16,8 +16,8 @@ def task_2():
     @task()
     def process_csv(ds=None, **kwargs):
         csv_file = f"/usr/local/airflow/output/{ds}.csv"
-        table_name = "csv_data_task_2"
-        postgres_conn_id = "postgres_default"
+        table_name = "csv_data_task"
+        postgres_conn_id = "postgres_data"
 
         logging.info(f"Processing CSV file: {csv_file}")
         try:

@@ -63,13 +63,13 @@ mounts:
 
 3. Set up PostgreSQL connection in Airflow UI:
 ```
-Connection Id: postgres_default
+Connection Id: postgres_data
 Connection Type: Postgres
-Host: postgres_db
+Host: host.docker.internal
 Database: db
 Login: postgres
 Password: postgres
-Port: 5432
+Port: 5433
 ```
 
 ### 4. Running the Pipeline
@@ -111,12 +111,12 @@ airflow dags backfill task_2 -s 2022-05-26 -e 2022-05-28
   1. Reads daily CSV files
   2. Transforms datetime format
   3. Adds audit timestamp
-  4. Loads to PostgreSQL table `csv_data_task_2`
+  4. Loads to PostgreSQL table `csv_data_task`
 
 ### 5. Final Storage (PostgreSQL)
 - **Table Schema**:
 ```sql
-CREATE TABLE csv_data_task_2 (
+CREATE TABLE csv_data_task (
     datetime TIMESTAMP NOT NULL,
     impression_count BIGINT NOT NULL,
     click_count BIGINT NOT NULL,
@@ -133,4 +133,16 @@ The pipeline generates hourly aggregations in the following format:
 | 2022-05-26 19:00:00.000 | 10               | 0           | 2025-01-20 04:20:44.061 |
 | 2022-05-27 11:00:00.000 | 0                | 10          | 2025-01-20 04:20:45.109 |
 | 2022-05-27 12:00:00.000 | 10               | 20          | 2025-01-20 04:20:45.109 |
+  
+# Connect to the container
+docker exec -it postgres_db bash
+
+# Connect to PostgreSQL using psql
+psql -U postgres -d db
+
+# List all tables
+\dt
+
+# Query the table
+SELECT * FROM csv_data_task;
 ```
