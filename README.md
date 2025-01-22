@@ -41,7 +41,6 @@ cd Impressions-Clicks
 Build-run the Spark application and PostgreSQL database:
 ```bash
 docker compose build
-docker compose run spark /opt/bitnami/spark/bin/spark-submit main.py --user-agent "some user agent"
 ```
 
 ### 3. Airflow Configuration
@@ -65,7 +64,7 @@ mounts:
 ```
 Connection Id: postgres_data
 Connection Type: Postgres
-Host: host.docker.internal
+Host: # to get the host run 'docker inspect postgres_database | grep Gateway'
 Database: db
 Login: postgres
 Password: postgres
@@ -73,9 +72,16 @@ Port: 5433
 ```
 
 ### 4. Running the Pipeline
+Execute the Spark application to process data:
+```bash
+docker compose run spark /opt/bitnami/spark/bin/spark-submit main.py --user-agent "some user agent"
+```
+
 Execute the DAG for processing CSV files:
 ```bash
 # Airflow web server's Docker container
+docker ps
+docker exec -it <container name> bash
 airflow dags backfill task_2 -s 2022-05-26 -e 2022-05-28
 ```
 
@@ -116,7 +122,7 @@ airflow dags backfill task_2 -s 2022-05-26 -e 2022-05-28
 ### 5. Final Storage (PostgreSQL)
 - **Table Schema**:
 ```sql
-CREATE TABLE csv_data_task (
+CREATE TABLE IF NOT EXISTS csv_data_task (
     datetime TIMESTAMP NOT NULL,
     impression_count BIGINT NOT NULL,
     click_count BIGINT NOT NULL,
@@ -135,14 +141,12 @@ The pipeline generates hourly aggregations in the following format:
 | 2022-05-27 12:00:00.000 | 10               | 20          | 2025-01-20 04:20:45.109 |
   
 # Connect to the container
-docker exec -it postgres_db bash
+docker exec -it postgres_database bash
 
 # Connect to PostgreSQL using psql
 psql -U postgres -d db
 
 # List all tables
-\dt
-
 # Query the table
 SELECT * FROM csv_data_task;
 ```
