@@ -114,10 +114,10 @@ airflow dags backfill task_2 -s 2022-05-26 -e 2022-05-28
 ### 4. Data Loading (Airflow)
 - **Schedule**: Daily at 00:00
 - **Process**:
-  1. Reads daily CSV files
-  2. Transforms datetime format
-  3. Adds audit timestamp
-  4. Loads to PostgreSQL table `csv_data_task`
+    - Reads daily CSV files
+    - Transforms datetime format
+    - Adds audit timestamp
+    - Loads to PostgreSQL table `csv_data_task`
 
 ### 5. Final Storage (PostgreSQL)
 - **Table Schema**:
