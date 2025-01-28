@@ -44,7 +44,7 @@ def task_2():
             # Create table if it doesn't exist
             create_table_query = f"""
                 CREATE TABLE IF NOT EXISTS {table_name} (
-                    datetime TIMESTAMP NOT NULL,
+                    datetime TIMESTAMP NOT NULL UNIQUE,
                     impression_count BIGINT NOT NULL,
                     click_count BIGINT NOT NULL,
                     audit_loaded_datetime TIMESTAMP NOT NULL
