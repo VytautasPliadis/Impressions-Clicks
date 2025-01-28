@@ -123,7 +123,7 @@ airflow dags backfill task_2 -s 2022-05-26 -e 2022-05-28
 - **Table Schema**:
 ```sql
 CREATE TABLE IF NOT EXISTS csv_data_task (
-    datetime TIMESTAMP NOT NULL,
+    datetime TIMESTAMP NOT NULL UNIQUE,
     impression_count BIGINT NOT NULL,
     click_count BIGINT NOT NULL,
     audit_loaded_datetime TIMESTAMP NOT NULL
